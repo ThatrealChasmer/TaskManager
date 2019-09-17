@@ -23,6 +23,8 @@ namespace TaskManager
         public MainWindow()
         {
             InitializeComponent();
+
+            this.DataContext = new WindowViewModel(this);
         }
     }
 }

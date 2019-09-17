@@ -9,7 +9,77 @@
         AllowsTransparency="True"
         Icon="/Images/checklist.png"
         Title="TaskManager" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+
+    <Window.Resources>
+        <Style TargetType="{x:Type local:MainWindow}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Window}">
+                        <!-- Outer border with the dropshadow margin -->
+                        <Border Background="Transparent" Padding="{Binding OuterMarginSizeThickness, FallbackValue=10}">
+                            <!-- Main window outline -->
+                            <Grid>
+                                <Border Background="{Binding ForegroundLightBrush, FallbackValue=White}">
+                                    <Border.Effect>
+                                        <DropShadowEffect ShadowDepth="2" Opacity="0.4"></DropShadowEffect>
+                                    </Border.Effect>
+                                </Border>
+
+                                <!-- Main window content -->
+                                <Grid>
+                                    
+                                    <Grid.RowDefinitions>
+                                        <!-- Title Bar -->
+                                        <RowDefinition Height="{Binding TitleHeightGridLength, FallbackValue=25}"/>
+                                        <!-- Window content -->
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+
+                                    <!-- Title bar content -->
+                                    <Grid Background="{StaticResource BackgroundDarkBrush}" Grid.Column="0" Panel.ZIndex="1">
+                                        <Grid.ColumnDefinitions>
+                                            <!-- Icon -->
+                                            <ColumnDefinition Width="Auto"/>
+                                            <!-- Title -->
+                                            <ColumnDefinition Width="*"/>
+                                            <!-- Buttons -->
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <!-- Icon -->
+                                        <Button Style="{StaticResource SystemIconButton}" Command="{Binding MenuCommand}">
+                                            <Image Source="/Images/checklist.png"/>
+                                        </Button>
+
+                                        <!-- Title -->
+                                        <Viewbox Grid.Column="0" Grid.ColumnSpan="3" Margin="0">
+                                            <TextBlock Style="{StaticResource HeaderText}" Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Title, FallbackValue='TaskManager'}"/>
+                                        </Viewbox>
+
+                                        <!-- Window Buttons -->
+                                        <StackPanel Grid.Column="2" Orientation="Horizontal">
+                                            <Button Style="{StaticResource WindowControlButton}" Content="_" Command="{Binding MinimizeCommand}"/>
+                                            <Button Style="{StaticResource WindowControlButton}" Content="[ ]" Command="{Binding MaximizeCommand}"/>
+                                            <Button Style="{StaticResource WindowCloseButton}" Content="X" Command="{Binding CloseCommand}"/>
+                                        </StackPanel>
+                                    </Grid>
+
+                                    <!-- Page content -->
+                                    <Border Background="{StaticResource BackgroundLightBrush}" Grid.Row="1" Padding="{Binding InnerContentPaddingThickness}">
+                                        <ContentPresenter Content="{TemplateBinding Content}"/>
+                                    </Border>
+
+
+                                </Grid>
+                            </Grid>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <WindowChrome.WindowChrome>
+        <WindowChrome ResizeBorderThickness="{Binding ResizeBorderThickness}" CaptionHeight="{Binding TitleHeight}" GlassFrameThickness="0"/>
+    </WindowChrome.WindowChrome>
 </Window>

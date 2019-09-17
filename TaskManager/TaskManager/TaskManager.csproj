@@ -67,6 +67,8 @@
     <Compile Include="ViewModels\Base\BaseViewModel.cs" />
     <Compile Include="ViewModels\Commands\RelayCommand.cs" />
     <Compile Include="ViewModels\Commands\RelayParameterizedCommand.cs" />
+    <Compile Include="ViewModels\WindowViewModel.cs" />
+    <Compile Include="Window\WindowResizer.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
