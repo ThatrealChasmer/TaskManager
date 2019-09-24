@@ -1,9 +1,10 @@
-﻿<Window x:Class="TaskManager.MainWindow"
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TaskManager"
+        x:Class="TaskManager.MainWindow"
         mc:Ignorable="d"
         WindowStyle="None"
         AllowsTransparency="True"
@@ -21,13 +22,13 @@
                             <Grid>
                                 <Border Background="{Binding ForegroundLightBrush, FallbackValue=White}">
                                     <Border.Effect>
-                                        <DropShadowEffect ShadowDepth="2" Opacity="0.4"></DropShadowEffect>
+                                        <DropShadowEffect ShadowDepth="2" Opacity="0.4"/>
                                     </Border.Effect>
                                 </Border>
 
                                 <!-- Main window content -->
                                 <Grid>
-                                    
+
                                     <Grid.RowDefinitions>
                                         <!-- Title Bar -->
                                         <RowDefinition Height="{Binding TitleHeightGridLength, FallbackValue=25}"/>
@@ -53,14 +54,14 @@
 
                                         <!-- Title -->
                                         <Viewbox Grid.Column="0" Grid.ColumnSpan="3" Margin="0">
-                                            <TextBlock Style="{StaticResource HeaderText}" Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Title, FallbackValue='TaskManager'}"/>
+                                            <TextBlock Style="{StaticResource HeaderText}" Text="{Binding Title, FallbackValue=TaskManager, RelativeSource={RelativeSource TemplatedParent}}"/>
                                         </Viewbox>
 
                                         <!-- Window Buttons -->
                                         <StackPanel Grid.Column="2" Orientation="Horizontal">
-                                            <Button Style="{StaticResource WindowControlButton}" Content="_" Command="{Binding MinimizeCommand}"/>
-                                            <Button Style="{StaticResource WindowControlButton}" Content="[ ]" Command="{Binding MaximizeCommand}"/>
-                                            <Button Style="{StaticResource WindowCloseButton}" Content="X" Command="{Binding CloseCommand}"/>
+                                            <Button Style="{StaticResource WindowControlButton}" Content="{StaticResource FAMinimizeIcon}" Command="{Binding MinimizeCommand}"/>
+                                            <Button Style="{StaticResource WindowControlButton}" Content="&#xf2d0;" Command="{Binding MaximizeCommand}"/>
+                                            <Button Style="{StaticResource WindowCloseButton}" Command="{Binding CloseCommand}"/>
                                         </StackPanel>
                                     </Grid>
 
@@ -82,4 +83,20 @@
     <WindowChrome.WindowChrome>
         <WindowChrome ResizeBorderThickness="{Binding ResizeBorderThickness}" CaptionHeight="{Binding TitleHeight}" GlassFrameThickness="0"/>
     </WindowChrome.WindowChrome>
+
+    <Border Background="Transparent">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <local:SideMenuControl>
+                <local:TaskListControl VerticalAlignment="Top"/>
+            </local:SideMenuControl>
+
+            <!-- Frame Containing current page (task) -->
+            <Frame Grid.Column="1" x:Name="MainFrame"/>
+        </Grid>
+    </Border>
 </Window>

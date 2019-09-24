@@ -13,7 +13,6 @@ namespace TaskManager
         private Window mWindow;
 
         private int mOuterMarginSize = 10;
-        private int mWindowRadius = 10;
 
         #endregion
 
@@ -68,27 +67,6 @@ namespace TaskManager
 
         public Thickness OuterMarginSizeThickness { get { return new Thickness(OuterMarginSize); } }
 
-        public int WindowRadius
-        {
-            get
-            {
-                if(mWindow.WindowState == WindowState.Maximized)
-                {
-                    return 0;
-                }
-                else
-                {
-                    return mWindowRadius;
-                }
-            }
-            set
-            {
-                mWindowRadius = value;
-            }
-        }
-
-        public CornerRadius WindowCornerRadius { get { return new CornerRadius(WindowRadius); } }
-
         public int TitleHeight { get; set; } = 25;
 
         public GridLength TitleHeightGridLength { get { return new GridLength(TitleHeight + ResizeBorder); } }
@@ -108,8 +86,6 @@ namespace TaskManager
                 OnPropertyChanged(nameof(ResizeBorderThickness));
                 OnPropertyChanged(nameof(OuterMarginSize));
                 OnPropertyChanged(nameof(OuterMarginSizeThickness));
-                OnPropertyChanged(nameof(WindowRadius));
-                OnPropertyChanged(nameof(WindowCornerRadius));
             };
 
             MinimizeCommand = new RelayCommand(() => mWindow.WindowState = WindowState.Minimized);
