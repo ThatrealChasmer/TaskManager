@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-namespace TaskManager
+namespace TaskManager.Core
 {
     // Base View Model that fires Property Changed events as needed
     public class BaseViewModel : INotifyPropertyChanged

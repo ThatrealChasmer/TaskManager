@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TaskManager
+namespace TaskManager.Core
 {
     /// <summary>
     /// A view model for each task list item in side task list

@@ -1,0 +1,25 @@
+﻿<local:BasePage x:TypeArguments="core:AddingViewModel" x:Class="TaskManager.Adding"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:TaskManager"
+      xmlns:core="clr-namespace:TaskManager.Core;assembly=TaskManager.Core"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="400"
+      Title="Adding">
+
+    <Border Background="{StaticResource BackgroundDarkBrush}" Padding="30 20 30 20">
+        <StackPanel>
+            <TextBlock Foreground="{StaticResource ForegroundMainBrush}" FontSize="20" Text="Title:"/>
+            <TextBox Background="{StaticResource BackgroundVeryDarkBrush}" FontSize="20" Margin="0 0 0 10"/>
+            <TextBlock Foreground="{StaticResource ForegroundMainBrush}" FontSize="20" Text="Contents:"/>
+            <TextBox Height="150" Background="{StaticResource BackgroundVeryDarkBrush}" FontSize="20" Margin="0 0 0 10"/>
+            <StackPanel Orientation="Horizontal">
+                <DatePicker/>
+                <TextBlock FontSize="20" Foreground="{StaticResource ForegroundMainBrush}" Text=" - "/>
+                <DatePicker/>
+            </StackPanel>
+        </StackPanel>
+    </Border>
+</local:BasePage>

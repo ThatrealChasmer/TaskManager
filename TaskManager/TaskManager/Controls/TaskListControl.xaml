@@ -4,10 +4,11 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:TaskManager"
+             xmlns:core="clr-namespace:TaskManager.Core;assembly=TaskManager.Core"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="200">
     
-    <Grid DataContext="{x:Static local:TaskListDesignViewModel.Instance}" Background="Transparent">
+    <Grid DataContext="{x:Static core:TaskListDesignViewModel.Instance}" Background="Transparent">
         <ScrollViewer VerticalScrollBarVisibility="Hidden">
             <ItemsControl ItemsSource="{Binding Items}">
                 <ItemsControl.ItemTemplate>

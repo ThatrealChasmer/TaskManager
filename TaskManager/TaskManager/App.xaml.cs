@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using TaskManager.Core.IoC;
 
 namespace TaskManager
 {
@@ -13,5 +14,15 @@ namespace TaskManager
     /// </summary>
     public partial class App : Application
     {
+        /// <summary>
+        /// Custom startup to load IoC container
+        /// </summary>
+        /// <param name="e"></param>
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
+
+            IoCContainer.Setup();
+        }
     }
 }

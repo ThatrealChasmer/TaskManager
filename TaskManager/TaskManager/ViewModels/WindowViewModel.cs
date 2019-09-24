@@ -3,6 +3,7 @@ using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using TaskManager.Core;
 
 namespace TaskManager
 {
@@ -71,7 +72,7 @@ namespace TaskManager
 
         public GridLength TitleHeightGridLength { get { return new GridLength(TitleHeight + ResizeBorder); } }
 
-        public ApplicationPage CurrentPage { get; set; } = ApplicationPage.Login;
+        
 
         #endregion
 

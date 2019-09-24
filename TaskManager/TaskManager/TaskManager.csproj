@@ -41,6 +41,9 @@
     <Reference Include="FontAwesome.WPF, Version=4.7.0.37774, Culture=neutral, PublicKeyToken=0758b07a11a4f466, processorArchitecture=MSIL">
       <HintPath>..\packages\FontAwesome.WPF.4.7.0.9\lib\net40\FontAwesome.WPF.dll</HintPath>
     </Reference>
+    <Reference Include="Ninject, Version=3.3.4.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.3.3.4\lib\net45\Ninject.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationFramework.Aero2" />
     <Reference Include="PropertyChanged, Version=2.6.1.0, Culture=neutral, PublicKeyToken=ee3ee20bcf148ddd, processorArchitecture=MSIL">
       <HintPath>..\packages\PropertyChanged.Fody.2.6.1\lib\net452\PropertyChanged.dll</HintPath>
@@ -74,20 +77,16 @@
     <Compile Include="Controls\TaskListItemControl.xaml.cs">
       <DependentUpon>TaskListItemControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="DataModels\ApplicationPage.cs" />
-    <Compile Include="DataModels\Priority.cs" />
-    <Compile Include="DataModels\Task.cs" />
+    <Compile Include="Pages\Adding.xaml.cs">
+      <DependentUpon>Adding.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\BasePage.cs" />
+    <Compile Include="ValueConverters\ApplicationPageValueConverter.cs" />
     <Compile Include="ValueConverters\BaseValueConverter.cs" />
     <Compile Include="ValueConverters\DateTimeToStringConverter.cs" />
+    <Compile Include="ValueConverters\IoCConverter.cs" />
     <Compile Include="ValueConverters\PriorityToBrushConverter.cs" />
-    <Compile Include="ViewModels\Base\BaseViewModel.cs" />
-    <Compile Include="ViewModels\Commands\RelayCommand.cs" />
-    <Compile Include="ViewModels\Commands\RelayParameterizedCommand.cs" />
-    <Compile Include="ViewModels\Tasks\Design\TaskListDesignViewModel.cs" />
-    <Compile Include="ViewModels\Tasks\Design\TaskListItemDesignViewModel.cs" />
-    <Compile Include="ViewModels\Tasks\TaskListItemViewModel.cs" />
-    <Compile Include="ViewModels\Tasks\TaskListViewModel.cs" />
+    <Compile Include="ViewModels\ViewModelLocator.cs" />
     <Compile Include="ViewModels\WindowViewModel.cs" />
     <Compile Include="Window\WindowResizer.cs" />
     <Page Include="Controls\SideMenuControl.xaml">
@@ -114,6 +113,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Pages\Adding.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Styles\Texts.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -178,6 +181,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\checklist.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TaskManager.Core\TaskManager.Core.csproj">
+      <Project>{de3db973-2778-4587-9aa7-a4aa510566ce}</Project>
+      <Name>TaskManager.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Fody.4.2.1\build\Fody.targets" Condition="Exists('..\packages\Fody.4.2.1\build\Fody.targets')" />

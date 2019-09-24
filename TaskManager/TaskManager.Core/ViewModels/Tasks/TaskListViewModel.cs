@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace TaskManager
+namespace TaskManager.Core
 {
     /// <summary>
     /// A view model for a side task list

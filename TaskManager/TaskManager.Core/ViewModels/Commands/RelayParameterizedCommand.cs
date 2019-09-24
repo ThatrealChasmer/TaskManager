@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace TalkieTalkie
+namespace TaskManager.Core
 {
     public class RelayParameterizedCommand : ICommand
     {

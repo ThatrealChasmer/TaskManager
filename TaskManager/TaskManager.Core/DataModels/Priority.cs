@@ -1,4 +1,4 @@
-﻿namespace TaskManager
+﻿namespace TaskManager.Core
 {
     public enum Priority
     {
