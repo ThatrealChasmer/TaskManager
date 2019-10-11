@@ -1,6 +1,5 @@
-﻿using TaskManager.Core.IoC;
-using TaskManager.Core.ViewModels;
-using Ninject;
+﻿using Ninject;
+using TaskManager.Core;
 
 namespace TaskManager
 {

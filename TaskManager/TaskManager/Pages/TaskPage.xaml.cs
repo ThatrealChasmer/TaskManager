@@ -17,11 +17,11 @@ using TaskManager.Core;
 namespace TaskManager
 {
     /// <summary>
-    /// Logika interakcji dla klasy Adding.xaml
+    /// Logika interakcji dla klasy TaskPage.xaml
     /// </summary>
-    public partial class Adding : BasePage<AddingViewModel>
+    public partial class TaskPage : BasePage<TaskViewModel>
     {
-        public Adding()
+        public TaskPage()
         {
             InitializeComponent();
         }

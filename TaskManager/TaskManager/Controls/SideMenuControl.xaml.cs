@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using TaskManager.Core;
 
 namespace TaskManager
 {
@@ -23,6 +24,8 @@ namespace TaskManager
         public SideMenuControl()
         {
             InitializeComponent();
+
+            this.DataContext = new SideMenuViewModel();
         }
     }
 }

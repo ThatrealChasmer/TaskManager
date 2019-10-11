@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using System.Windows.Input;
 
 namespace TaskManager.Core
 {
@@ -8,14 +11,67 @@ namespace TaskManager.Core
     /// </summary>
     public class TaskListViewModel : BaseViewModel
     {
+        public ICommand RefreshCommand { get; set; }
+
         #region Public Properties
 
         /// <summary>
         /// List of all tasks
         /// </summary>
-        public List<TaskListItemViewModel> Items { get; set; }
+        public ObservableCollection<TaskListItemViewModel> Items { get; set; } = new ObservableCollection<TaskListItemViewModel>();
 
 
         #endregion
+
+        #region Constructor
+
+        public TaskListViewModel()
+        {
+            OnPropertyChanged(nameof(Items));
+
+            RefreshCommand = new RelayCommand(() => Refresh());
+            
+            if(IoCContainer.Get<ApplicationViewModel>().Tasks.Count >= 0)
+            {
+                foreach (var task in IoCContainer.Get<ApplicationViewModel>().Tasks)
+                {
+                    Items.Add(
+                        new TaskListItemViewModel
+                        {
+                            Task = task,
+                            Title = task.Title,
+                            Contents = task.Contents,
+                            EndDate = task.EndDate,
+                            Priority = task.Priority
+                        });
+                }
+            }
+            
+            var AVM = IoCContainer.Get<ApplicationViewModel>();
+
+            AVM.Tasks.CollectionChanged += (s, e) => Refresh();
+        }
+
+        #endregion
+
+        public void Refresh()
+        {
+            if(IoCContainer.Get<ApplicationViewModel>().Tasks.Count > 0)
+            {
+                Items.Clear();
+                foreach (Task task in IoCContainer.Get<ApplicationViewModel>().Tasks)
+                {
+                    Items.Add(
+                        new TaskListItemViewModel
+                        {
+                            Task = task,
+                            Title = task.Title,
+                            Contents = task.Contents,
+                            EndDate = task.EndDate,
+                            Priority = task.Priority
+                        });
+                }
+            }
+        }
     }
 }

@@ -1,7 +1,6 @@
 ﻿using Ninject;
-using TaskManager.Core.ViewModels;
 
-namespace TaskManager.Core.IoC
+namespace TaskManager.Core
 {
     /// <summary>
     /// IoC container for application
@@ -30,6 +29,16 @@ namespace TaskManager.Core.IoC
         {
             // Bind to single instance of ApplicationViewModel 
             Kernel.Bind<ApplicationViewModel>().ToConstant(new ApplicationViewModel());
+        }
+
+        /// <summary>
+        /// Helper function to get given binded view model
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public static T Get<T>()
+        {
+            return Kernel.Get<T>();
         }
     }
 }

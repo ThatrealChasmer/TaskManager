@@ -5,7 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:TaskManager"
              xmlns:core="clr-namespace:TaskManager.Core;assembly=TaskManager.Core"
-             mc:Ignorable="d" 
+             mc:Ignorable="d"
+             MouseLeftButtonDown="UserControl_MouseLeftButtonDown"
              Height="60"
              d:DesignHeight="60" d:DesignWidth="200">
 
@@ -23,8 +24,8 @@
                             </Grid.ColumnDefinitions>
 
                             <Border Background="{Binding Priority, Converter={local:PriorityToBrushConverter}}" Width="5"/>
-
-                            <Border Grid.Column="1" Padding="10 5 5 5">
+                                
+                                <Border Grid.Column="1" Padding="10 5 5 5">
                                 <StackPanel VerticalAlignment="Center">
                                     <TextBlock Foreground="{StaticResource ForegroundMainBrush}" FontFamily="{StaticResource ArconRounded}" FontSize="15" Text="{Binding Title}" TextTrimming="CharacterEllipsis"/>
                                     <TextBlock Foreground="{StaticResource ForegroundVeryDarkBrush}" FontFamily="{StaticResource ArconRegular}" FontSize="13" Text="{Binding Contents}" TextTrimming="CharacterEllipsis"/>

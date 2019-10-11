@@ -1,0 +1,43 @@
+﻿<local:BasePage x:TypeArguments="core:AddingViewModel" x:Class="TaskManager.AddingPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:TaskManager"
+      xmlns:core="clr-namespace:TaskManager.Core;assembly=TaskManager.Core"
+      mc:Ignorable="d" 
+      d:DesignHeight="700" d:DesignWidth="800"
+      Title="AddingPage">
+
+    <ScrollViewer VerticalScrollBarVisibility="Hidden">
+        <Border Background="{StaticResource BackgroundDarkBrush}" Padding="30 20 30 20" Margin="0 60 0 60" Width="600">
+            <StackPanel>
+                <TextBlock Foreground="{StaticResource ForegroundMainBrush}" FontSize="20" Text="Title:"/>
+                <TextBox Text="{Binding Title}" Style="{StaticResource BaseTextBoxStyle}" Background="{StaticResource BackgroundVeryDarkBrush}" FontSize="20" Margin="0 0 0 10"/>
+                <TextBlock Foreground="{StaticResource ForegroundMainBrush}" FontSize="20" Text="Contents:"/>
+                <TextBox Text="{Binding Contents}" Style="{StaticResource BaseTextBoxStyle}" Height="120" Background="{StaticResource BackgroundVeryDarkBrush}" FontSize="20" Margin="0 0 0 10" TextWrapping="Wrap"/>
+                <TextBlock FontSize="20" Foreground="{StaticResource ForegroundMainBrush}" Text="{Binding ElementName=cal, Path=SelectedDate}"/>
+                <StackPanel Orientation="Horizontal">
+                    <Calendar SelectedDate="{Binding DateTime}" x:Name="cal" Foreground="{StaticResource ForegroundVeryDarkBrush}" HorizontalAlignment="Left" Style="{StaticResource BaseCalendarStyle}"/>
+                    <StackPanel Margin="15 0 0 0">
+                        <TextBlock Margin="0 0 0 10" FontSize="20" Foreground="{StaticResource ForegroundMainBrush}" Text="Priority:"/>
+                        <ComboBox SelectedIndex="{Binding Priority}" FontSize="20"  Style="{StaticResource BasicCB}" Width="200">
+                            <ComboBoxItem Style="{StaticResource BasicCBItem}" Content="Low"/>
+                            <ComboBoxItem Style="{StaticResource BasicCBItem}" Content="Normal"/>
+                            <ComboBoxItem Style="{StaticResource BasicCBItem}" Content="High"/>
+                        </ComboBox>
+                        <TextBlock Margin="0 10 0 10" FontSize="20" Foreground="{StaticResource ForegroundMainBrush}" Text="Status:"/>
+                        <ComboBox SelectedIndex="{Binding State}" FontSize="20"  Style="{StaticResource BasicCB}" Width="200">
+                            <ComboBoxItem Style="{StaticResource BasicCBItem}" Content="New"/>
+                            <ComboBoxItem Style="{StaticResource BasicCBItem}" Content="In progress"/>
+                            <ComboBoxItem Style="{StaticResource BasicCBItem}" Content="Finished"/>
+                        </ComboBox>
+                    </StackPanel>
+                </StackPanel>
+                <Button FontSize="40" Content="Add" Margin="0 10 0 0" Width="150" Command="{Binding AddCommand}"/>
+            </StackPanel>
+        </Border>
+    </ScrollViewer>
+
+
+</local:BasePage>

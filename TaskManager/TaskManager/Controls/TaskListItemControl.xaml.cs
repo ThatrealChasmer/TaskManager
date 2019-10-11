@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using TaskManager.Core;
 
 namespace TaskManager
 {
@@ -23,6 +24,16 @@ namespace TaskManager
         public TaskListItemControl()
         {
             InitializeComponent();
+        }
+
+        private void UserControl_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            var vm = DataContext as TaskListItemViewModel;
+            if (vm == null)
+                return;
+
+            IoCContainer.Get<ApplicationViewModel>().CurrentTask = vm.Task;
+            IoCContainer.Get<ApplicationViewModel>().CurrentPage = ApplicationPage.Task;
         }
     }
 }

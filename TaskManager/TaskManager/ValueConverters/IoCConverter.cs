@@ -1,8 +1,7 @@
 ﻿using Ninject;
 using System;
 using System.Globalization;
-using TaskManager.Core.IoC;
-using TaskManager.Core.ViewModels;
+using TaskManager.Core;
 
 namespace TaskManager
 {

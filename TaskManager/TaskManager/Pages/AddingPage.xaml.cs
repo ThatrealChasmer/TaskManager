@@ -17,15 +17,13 @@ using TaskManager.Core;
 namespace TaskManager
 {
     /// <summary>
-    /// Logika interakcji dla klasy TaskListControl.xaml
+    /// Logika interakcji dla klasy AddingPage.xaml
     /// </summary>
-    public partial class TaskListControl : UserControl
+    public partial class AddingPage : BasePage<AddingViewModel>
     {
-        public TaskListControl()
+        public AddingPage()
         {
             InitializeComponent();
-
-            this.DataContext = new TaskListViewModel();
         }
     }
 }

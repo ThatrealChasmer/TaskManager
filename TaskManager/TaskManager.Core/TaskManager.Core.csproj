@@ -53,6 +53,7 @@
     <Compile Include="DataModels\ApplicationPage.cs" />
     <Compile Include="DataModels\Priority.cs" />
     <Compile Include="DataModels\Task.cs" />
+    <Compile Include="DataModels\TaskState.cs" />
     <Compile Include="IoC\IoCContainer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\AddingViewModel.cs" />
@@ -60,10 +61,12 @@
     <Compile Include="ViewModels\Base\BaseViewModel.cs" />
     <Compile Include="ViewModels\Commands\RelayCommand.cs" />
     <Compile Include="ViewModels\Commands\RelayParameterizedCommand.cs" />
+    <Compile Include="ViewModels\SideMenuViewModel.cs" />
     <Compile Include="ViewModels\Tasks\Design\TaskListDesignViewModel.cs" />
     <Compile Include="ViewModels\Tasks\Design\TaskListItemDesignViewModel.cs" />
     <Compile Include="ViewModels\Tasks\TaskListItemViewModel.cs" />
     <Compile Include="ViewModels\Tasks\TaskListViewModel.cs" />
+    <Compile Include="ViewModels\TaskViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

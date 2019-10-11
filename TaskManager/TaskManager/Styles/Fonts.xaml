@@ -1,6 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="clr-namespace:TaskManager"
+                    xmlns:local="clr-namespace:TaskManager.Styles"
                     xmlns:system="clr-namespace:System;assembly=mscorlib">
 
     <FontFamily x:Key="ArconRegular">pack://application;,,,/Fonts/#Arcon</FontFamily>
@@ -13,6 +13,11 @@
 
     <Style TargetType="{x:Type TextBlock}" x:Key="BaseTextBlockStyle">
         <Setter Property="FontFamily" Value="{StaticResource ArconRegular}"/>
+        <Setter Property="Foreground" Value="{StaticResource ForegroundMainBrush}"/>
+    </Style>
+
+    <Style TargetType="{x:Type TextBox}" x:Key="BaseTextBoxStyle">
+        <Setter Property="Foreground" Value="{StaticResource ForegroundMainBrush}"/>
     </Style>
 
     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource BaseStyle}"/>

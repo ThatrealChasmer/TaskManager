@@ -32,7 +32,7 @@
 
                     <ContentPresenter Grid.Row="1"/>
 
-                    <Button Grid.Row="2" FontSize="30" Content="+"/>
+                    <Button Grid.Row="2" FontSize="30" Content="+" Command="{Binding AddCommand}"/>
                 </Grid>
             </Border>
         </ControlTemplate>

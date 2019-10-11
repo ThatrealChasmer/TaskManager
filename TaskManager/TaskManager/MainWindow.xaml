@@ -9,7 +9,7 @@
         WindowStyle="None"
         AllowsTransparency="True"
         Icon="/Images/checklist.png"
-        Title="TaskManager" Height="450" Width="800">
+        Title="TaskManager" Height="500" Width="900">
 
     <Window.Resources>
         <Style TargetType="{x:Type local:MainWindow}">
@@ -96,7 +96,7 @@
             </local:SideMenuControl>
 
             <!-- Frame Containing current page (task) -->
-            <Frame Grid.Column="1" x:Name="MainFrame" Content="{Binding ApplicationViewModel.CurrentPage, Source={x:Static local:ViewModelLocator.Instance}, Converter={local:ApplicationPageValueConverter}}"/>
+            <Frame Grid.Column="1" x:Name="MainFrame" Content="{Binding ApplicationViewModel.CurrentPage, Source={x:Static local:ViewModelLocator.Instance}, Converter={local:ApplicationPageValueConverter}}" Background="Transparent"/>
         </Grid>
     </Border>
 </Window>

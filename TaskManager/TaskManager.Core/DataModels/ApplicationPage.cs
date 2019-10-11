@@ -3,8 +3,9 @@
     // Enumerator storing every page type
     public enum ApplicationPage
     {
-        Task = 0,
-        Adding = 1,
-        Editing = 2
+        Start = 0,
+        Task = 1,
+        Adding = 2,
+        Editing = 3
     }
 }

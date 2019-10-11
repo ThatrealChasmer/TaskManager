@@ -11,10 +11,12 @@ namespace TaskManager
         {
             switch((ApplicationPage)value)
             {
+                case ApplicationPage.Start:
+                    return null;
                 case ApplicationPage.Task:
-                    return null;
+                    return new TaskPage();
                 case ApplicationPage.Adding:
-                    return null;
+                    return new AddingPage();
 
                 default:
                     Debugger.Break();

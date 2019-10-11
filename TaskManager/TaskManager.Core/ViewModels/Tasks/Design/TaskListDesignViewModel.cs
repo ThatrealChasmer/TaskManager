@@ -11,7 +11,9 @@ namespace TaskManager.Core
         public static TaskListDesignViewModel Instance => new TaskListDesignViewModel();
         public TaskListDesignViewModel()
         {
-            Items = new List<TaskListItemViewModel>
+            OnPropertyChanged(nameof(Items));
+
+            Items = new System.Collections.ObjectModel.ObservableCollection<TaskListItemViewModel>
             {
                 new TaskListItemViewModel
                 {

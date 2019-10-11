@@ -10,6 +10,11 @@ namespace TaskManager.Core
         #region Public Properties
 
         /// <summary>
+        /// Task that is represented by this view model
+        /// </summary>
+        public Task Task { get; set; }
+
+        /// <summary>
         /// Title of the task
         /// </summary>
         public string Title { get; set; }
@@ -30,6 +35,15 @@ namespace TaskManager.Core
         public Priority Priority { get; set; }
 
         public bool IsSelected { get; set; }
+
+        #endregion
+
+        #region Constructor
+
+        public TaskListItemViewModel()
+        {
+            OnPropertyChanged(nameof(IsSelected));
+        }
 
         #endregion
     }
