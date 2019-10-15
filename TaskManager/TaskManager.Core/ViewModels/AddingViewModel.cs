@@ -70,9 +70,11 @@ namespace TaskManager.Core
                     break;
             }
 
-            Task toAdd = new Task(Title, Contents, DateTime.Today, DateTime, p, s);
-            
-            IoCContainer.Get<ApplicationViewModel>().Tasks.Add(toAdd);
+            Task toAdd = new Task(0, Title, Contents, DateTime.Today, DateTime, p, s);
+
+            SQLConnectionHandler.Instance.AddTask(toAdd);
+
+            IoCContainer.Get<ApplicationViewModel>().RefreshTasks();
         }
     }
 }

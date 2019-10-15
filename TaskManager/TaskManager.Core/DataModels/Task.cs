@@ -46,8 +46,9 @@ namespace TaskManager.Core
 
         #region Constructor
 
-        public Task(string title, string contents, DateTime start, DateTime end, Priority priority, TaskState state)
+        public Task(int id, string title, string contents, DateTime start, DateTime end, Priority priority, TaskState state)
         {
+            this.ID = id;
             this.Title = title;
             this.Contents = contents;
             this.StartDate = start;

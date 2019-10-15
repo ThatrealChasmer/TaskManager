@@ -26,6 +26,30 @@ namespace TaskManager.Core
         {
             OnPropertyChanged(nameof(CurrentPage));
             OnPropertyChanged(nameof(CurrentTask));
+
+            RefreshTasks();
+        }
+
+        public void RefreshTasks()
+        {
+            List<Task> fromDB = SQLConnectionHandler.Instance.GetTasks();
+
+            foreach(var taskDB in fromDB)
+            {
+                bool canAdd = true;
+                foreach(var task in Tasks)
+                {
+                    if(taskDB == task)
+                    {
+                        canAdd = false;
+                        break;
+                    }
+                }
+                if(canAdd)
+                {
+                    Tasks.Add(taskDB);
+                }
+            }
         }
     }
 }
