@@ -72,7 +72,7 @@ namespace TaskManager
 
         public GridLength TitleHeightGridLength { get { return new GridLength(TitleHeight + ResizeBorder); } }
 
-        
+        public string MaximizeIconText { get { return mWindow.WindowState == WindowState.Maximized ? "[] " : "[ ] "; } }
 
         #endregion
 
@@ -87,6 +87,7 @@ namespace TaskManager
                 OnPropertyChanged(nameof(ResizeBorderThickness));
                 OnPropertyChanged(nameof(OuterMarginSize));
                 OnPropertyChanged(nameof(OuterMarginSizeThickness));
+                OnPropertyChanged(nameof(MaximizeIconText));
             };
 
             MinimizeCommand = new RelayCommand(() => mWindow.WindowState = WindowState.Minimized);

@@ -26,13 +26,24 @@ namespace TaskManager
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Opening task on click
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void UserControl_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            var vm = DataContext as TaskListItemViewModel;
+            // Get view model of the task to show
+            TaskListItemViewModel vm = DataContext as TaskListItemViewModel;
+
+            // Check if the viewmodel exists, if it doesn't return
             if (vm == null)
                 return;
 
+            // Set current task
             IoCContainer.Get<ApplicationViewModel>().CurrentTask = vm.Task;
+
+            // Set app page to task page
             IoCContainer.Get<ApplicationViewModel>().CurrentPage = ApplicationPage.Task;
         }
     }

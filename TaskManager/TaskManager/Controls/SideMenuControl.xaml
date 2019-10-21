@@ -9,9 +9,10 @@
 
     <UserControl.Template>
         <ControlTemplate TargetType="UserControl">
-            <Border Background="{StaticResource BackgroundDarkBrush}" Padding="3">
+            <Border x:Name="Container" Background="{StaticResource BackgroundDarkBrush}" Padding="3">
                 <Grid>
                     <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="Auto"/>
@@ -19,20 +20,36 @@
 
                     <Grid Grid.Row="0">
                         <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Button Grid.Column="0" Content="New" FontSize="12" Padding="5 3 5 3" Command="{Binding ChangeListCommand}" CommandParameter="0"/>
+                        <Button Grid.Column="1" Content="In progress" FontSize="12" Padding="5 3 5 3" Command="{Binding ChangeListCommand}" CommandParameter="1"/>
+                        <Button Grid.Column="2" Content="Finished" FontSize="12" Padding="5 3 5 3" Command="{Binding ChangeListCommand}" CommandParameter="2"/>
+                    </Grid>
+
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <TextBlock Grid.Column="0" VerticalAlignment="Center" FontSize="15" Foreground="{StaticResource ForegroundMainBrush}" Text="Sort: "/>
-                        <ComboBox Grid.Column="1" Style="{DynamicResource BasicCB}">
-                            <ComboBoxItem Style="{StaticResource BasicCBItem}" Content="Nr 1"/>
-                            <ComboBoxItem Style="{StaticResource BasicCBItem}" Content="Nr 2"/>
-                            <ComboBoxItem Style="{StaticResource BasicCBItem}" Content="Nr 3"/>
+                        <ComboBox Grid.Column="1" Style="{DynamicResource BasicCB}" Text="{Binding Order, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="{Binding OrderID}">
+                            <ComboBoxItem Style="{StaticResource BasicCBItem}" Content="Newest"/>
+                            <ComboBoxItem Style="{StaticResource BasicCBItem}" Content="Oldest"/>
+                            <ComboBoxItem Style="{StaticResource BasicCBItem}" Content="Top priority"/>
+                            <ComboBoxItem Style="{StaticResource BasicCBItem}" Content="Lowest priority"/>
+                            <ComboBoxItem Style="{StaticResource BasicCBItem}" Content="Ending soon"/>
+                            <ComboBoxItem Style="{StaticResource BasicCBItem}" Content="A-Z"/>
+                            <ComboBoxItem Style="{StaticResource BasicCBItem}" Content="Z-A"/>
                         </ComboBox>
                     </Grid>
 
-                    <ContentPresenter Grid.Row="1"/>
+                    <ContentPresenter Grid.Row="2"/>
 
-                    <Button Grid.Row="2" FontSize="30" Content="+" Command="{Binding AddCommand}"/>
+                    <Button Grid.Row="3" FontSize="30" Content="+" Command="{Binding AddCommand}"/>
                 </Grid>
             </Border>
         </ControlTemplate>

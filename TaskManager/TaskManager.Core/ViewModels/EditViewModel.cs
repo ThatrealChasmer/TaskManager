@@ -8,8 +8,14 @@ using TaskManager;
 
 namespace TaskManager.Core
 {
-    public class AddingViewModel : BaseViewModel
+    public class EditViewModel : BaseViewModel
     {
+        #region Private Members
+
+        private int TaskID { get; set; }
+
+        #endregion
+
         #region Public Properties
 
         public string Title { get; set; }
@@ -22,28 +28,38 @@ namespace TaskManager.Core
 
         #region Commands
 
-        public ICommand AddCommand { get; set; }
+        public ICommand SaveCommand { get; set; }
 
         #endregion
 
         #region Constructor
 
-        public AddingViewModel()
+        public EditViewModel()
         {
+            Task task = IoCContainer.Get<ApplicationViewModel>().CurrentTask;
+
+            TaskID = task.ID;
+            Title = task.Title;
+            Contents = task.Contents;
+            DateTime = task.EndDate;
+            Priority = (int)task.Priority;
+            State = (int)task.State;
+
+
             OnPropertyChanged(nameof(Title));
             OnPropertyChanged(nameof(Contents));
             OnPropertyChanged(nameof(DateTime));
             OnPropertyChanged(nameof(Priority));
             OnPropertyChanged(nameof(State));
 
-            AddCommand = new RelayCommand(() => Add());
+            SaveCommand = new RelayCommand(() => Save());
         }
 
         #endregion
 
-        private void Add()
+        private void Save()
         {
-            Core.Priority p = Core.Priority.Normal;
+            Priority p = Core.Priority.Normal;
             TaskState s = TaskState.New;
             switch(Priority)
             {
@@ -69,16 +85,18 @@ namespace TaskManager.Core
                     s = TaskState.Finished;
                     break;
             }
-            
-            Task toAdd = new Task(0, Title, Contents, DateTime.Today, DateTime, p, s);
 
-            SQLConnectionHandler.Instance.AddTask(toAdd);
+            Task toEdit = new Task(TaskID, Title, Contents, DateTime.Today, DateTime, p, s);
 
-            IoCContainer.Get<ApplicationViewModel>().CurrentTaskType = toAdd.State;
+            SQLConnectionHandler.Instance.EditTask(toEdit);
+
+            IoCContainer.Get<ApplicationViewModel>().CurrentTaskType = toEdit.State;
 
             IoCContainer.Get<ApplicationViewModel>().RefreshTasks();
 
-            IoCContainer.Get<ApplicationViewModel>().CurrentPage = ApplicationPage.Start;
+            IoCContainer.Get<ApplicationViewModel>().CurrentTask = toEdit;
+
+            IoCContainer.Get<ApplicationViewModel>().CurrentPage = ApplicationPage.Task;
         }
     }
 }

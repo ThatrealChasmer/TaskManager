@@ -9,6 +9,7 @@ namespace TaskManager
     {
         public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            // Return a page corresponding wih converted value
             switch((ApplicationPage)value)
             {
                 case ApplicationPage.Start:
@@ -17,6 +18,8 @@ namespace TaskManager
                     return new TaskPage();
                 case ApplicationPage.Adding:
                     return new AddingPage();
+                case ApplicationPage.Editing:
+                    return new EditPage();
 
                 default:
                     Debugger.Break();

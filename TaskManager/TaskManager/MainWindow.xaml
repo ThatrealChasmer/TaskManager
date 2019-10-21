@@ -59,8 +59,9 @@
 
                                         <!-- Window Buttons -->
                                         <StackPanel Grid.Column="2" Orientation="Horizontal">
-                                            <Button Style="{StaticResource WindowControlButton}" Content="{StaticResource FAMinimizeIcon}" Command="{Binding MinimizeCommand}"/>
-                                            <Button Style="{StaticResource WindowControlButton}" Content="&#xf2d0;" Command="{Binding MaximizeCommand}"/>
+                                            <Button Style="{StaticResource WindowControlButton}" Content="_" Command="{Binding MinimizeCommand}"/>
+                                            <Button Style="{StaticResource WindowControlButton}" Content="{Binding MaximizeIconText}" Padding="0 2" Command="{Binding MaximizeCommand}">
+                                            </Button>
                                             <Button Style="{StaticResource WindowCloseButton}" Command="{Binding CloseCommand}"/>
                                         </StackPanel>
                                     </Grid>
@@ -88,7 +89,9 @@
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="200"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="642*"/>
+                <ColumnDefinition Width="9*"/>
+                <ColumnDefinition Width="29*"/>
             </Grid.ColumnDefinitions>
 
             <local:SideMenuControl>
@@ -96,7 +99,7 @@
             </local:SideMenuControl>
 
             <!-- Frame Containing current page (task) -->
-            <Frame Grid.Column="1" x:Name="MainFrame" Content="{Binding ApplicationViewModel.CurrentPage, Source={x:Static local:ViewModelLocator.Instance}, Converter={local:ApplicationPageValueConverter}}" Background="Transparent"/>
+            <Frame Grid.Column="1" x:Name="MainFrame" local:NoFrameNavigationBar.Value="True" Content="{Binding ApplicationViewModel.CurrentPage, Source={x:Static local:ViewModelLocator.Instance}, Converter={local:ApplicationPageValueConverter}}" Background="Transparent" Grid.ColumnSpan="3"/>
         </Grid>
     </Border>
 </Window>

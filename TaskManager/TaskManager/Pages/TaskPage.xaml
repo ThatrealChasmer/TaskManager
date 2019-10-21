@@ -5,24 +5,80 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:TaskManager"
       xmlns:core="clr-namespace:TaskManager.Core;assembly=TaskManager.Core"
-      mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      mc:Ignorable="d" d:DesignWidth="600"
       Title="TaskPage">
 
-    <ScrollViewer VerticalScrollBarVisibility="Hidden">
-        <Border Background="{StaticResource BackgroundDarkBrush}" Padding="30 20 30 20" Margin="0 60 0 60" Width="600">
+    <Grid Background="Transparent">
+        <ScrollViewer Background="Transparent" VerticalScrollBarVisibility="Hidden">
             <StackPanel>
-                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
-                    <TextBlock Text="Added: " FontSize="15" />
-                    <TextBlock Text="{Binding Added, Converter={local:DateTimeToStringConverter}}"/>
-                </StackPanel>
-                <TextBlock Text="{Binding Title, FallbackValue=Test}" FontSize="30" Margin="0 0 0 10"/>
-                <TextBlock Text="{Binding Contents, FallbackValue='This is a test task'}" Foreground="{StaticResource ForegroundVeryDarkBrush}" FontSize="20" Margin="0 0 0 10"/>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock FontSize="20" Text="Until: "/>
-                    <TextBlock FontSize="20" Text="{Binding End}"/>
-                </StackPanel>
+                <Border Background="{StaticResource BackgroundDarkBrush}" Width="600" Margin="0 60 0 60" Padding="10 10 10 10">
+                    <StackPanel x:Name="SP">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            
+                            <!-- State changning buttons -->
+                            <StackPanel Grid.Column="0" Orientation="Horizontal" Margin="-10 -10 0 0">
+                                <Button Content="Work in progress" Padding="5 3 5 3" Visibility="{Binding State, Converter={local:StateToVisibilityConverter}}" Command="{Binding MoveToCommand}" CommandParameter="1"/>
+                                <Button Content="Finish" Padding="5 3 5 3" Visibility="{Binding State, Converter={local:StateToVisibilityConverter}, ConverterParameter=true}" Command="{Binding MoveToCommand}" CommandParameter="2"/>
+                            </StackPanel>
+                            
+                            <!-- Date task was added -->
+                            <StackPanel Grid.Column="2" Orientation="Horizontal">
+                                <TextBlock Text="Added: " FontSize="15" />
+                                <TextBlock Text="{Binding Added, Converter={local:DateTimeToStringConverter}}" FontSize="15"/>
+                            </StackPanel>
+                        </Grid>
+                        
+                        <!-- Title -->
+                        <TextBlock Text="{Binding Title, FallbackValue=Test}" FontSize="30" Margin="0 0 0 10"/>
+                        <!-- Contents -->
+                        <TextBlock Text="{Binding Contents, FallbackValue='This is a test task'}" Foreground="{StaticResource ForegroundVeryDarkBrush}" FontSize="20" Margin="0 0 0 10"/>
+                        <!-- Ending date -->
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock FontSize="20" Text="Until: "/>
+                            <TextBlock FontSize="20" Text="{Binding End, Converter={local:DateTimeToStringConverter}}"/>
+                        </StackPanel>
+                        
+                        <!-- Note list -->
+                        <ItemsControl ItemsSource="{Binding Notes}" Margin="0 15 0 15">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <local:NoteControl/>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                        
+                        <!-- Note adding textbox-->
+                        <Border Visibility="{Binding NoteTBVisibility, Converter={local:BoolToVisibilityConverter}}">
+                            <StackPanel>
+                                <TextBox Text="{Binding NoteText}" TextWrapping="Wrap" Margin="0 15 0 10" Height="50" Foreground="{StaticResource ForegroundMainBrush}" Background="{StaticResource BackgroundVeryDarkBrush}"/>
+                                <Button HorizontalAlignment="Right" Margin="0 0 -10 -10" Content="Save" Padding="5 3 5 3" Command="{Binding SaveNoteCommand}"/>
+                            </StackPanel>
+                        </Border>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            
+                            <!-- Edit and delete buttons -->
+                            <StackPanel Orientation="Horizontal" Grid.Column="0" Margin="-10 0 0 -10">
+                                <Button Padding="5 3 5 3" Content="Edit task" Command="{Binding EditCommand}" Visibility="{Binding AddBtnVisiblity, Converter={local:BoolToVisibilityConverter}}"/>
+                                <Button Padding="5 3 5 3" Content="Delete task" Command="{Binding DeleteCommand}" Visibility="{Binding AddBtnVisiblity, Converter={local:BoolToVisibilityConverter}}"/>
+                            </StackPanel>
+                            
+                            <!-- Add note button -->
+                            <Button Grid.Column="2" Padding="5 3 5 3" Margin="0 0 -10 -10" Content="Add note" HorizontalAlignment="Right" Command="{Binding AddNoteCommand}" Visibility="{Binding AddBtnVisiblity, Converter={local:BoolToVisibilityConverter}}"/>
+                        </Grid>
+                    </StackPanel>
+                </Border>
             </StackPanel>
-        </Border>
-    </ScrollViewer>
+        </ScrollViewer>
+    </Grid>
+    
 </local:BasePage>
