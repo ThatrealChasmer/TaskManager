@@ -141,10 +141,9 @@ namespace TaskManager.Core
             TaskState s = (TaskState)(Convert.ToInt32(p));
             SQLConnectionHandler.Instance.MoveTask(ID, s);
 
+            IoCContainer.Get<ApplicationViewModel>().CurrentTaskType = s;
             IoCContainer.Get<ApplicationViewModel>().RefreshTasks();
-
-            IoCContainer.Get<ApplicationViewModel>().CurrentTaskType = State;
-
+            
             Refresh();
         }
 

@@ -56,9 +56,10 @@ namespace TaskManager.Core
 
         public void Refresh()
         {
-            if(IoCContainer.Get<ApplicationViewModel>().Tasks.Count > 0)
+            Items.Clear();
+            if (IoCContainer.Get<ApplicationViewModel>().Tasks.Count > 0)
             {
-                Items.Clear();
+                
                 foreach (Task task in IoCContainer.Get<ApplicationViewModel>().Tasks)
                 {
                     Items.Add(

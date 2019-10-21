@@ -45,7 +45,18 @@ namespace TaskManager.Core
                 Tasks.Add(task);
             }
 
-            CurrentTask = CurrentTask != null ? Tasks.Where(t => t.ID == CurrentTask.ID).FirstOrDefault() : null;
+            if (CurrentTask != null)
+            {
+                try
+                {
+                    CurrentTask = Tasks.Where(t => t.ID == CurrentTask.ID).First();
+
+                }
+                catch
+                {
+                    new NullReferenceException();
+                }
+            }
 
             SortTasks();
         }
