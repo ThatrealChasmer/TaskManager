@@ -18,6 +18,8 @@ namespace TaskManager.Core
 
         // Initializing reader and connection
         public SqlDataReader rdr = null;
+
+        // Change the string after @ to connect to your database
         public SqlConnection connection = new SqlConnection(@"Data Source=(local)\TASKMANAGERDB;Initial Catalog=TaskManager;Integrated Security=True;");
 
         #region Tasks
