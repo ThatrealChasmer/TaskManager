@@ -12,7 +12,7 @@ namespace TaskManager
         public override void OnValueChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
             // Get the frame
-            var frame = (sender as Frame);
+            Frame frame = (sender as Frame);
 
             // Hide the navigation bar
             frame.NavigationUIVisibility = NavigationUIVisibility.Hidden;

@@ -13,16 +13,16 @@
         <Border Background="{StaticResource BackgroundDarkBrush}" Padding="30 20 30 20" Margin="0 60 0 60" Width="600">
             <StackPanel>
                 <!-- Title field -->
-                <TextBlock Foreground="{StaticResource ForegroundMainBrush}" FontSize="20" Text="Title:"/>
+                <TextBlock Foreground="{StaticResource ForegroundMainBrush}" FontSize="20" Text="Title*:"/>
                 <TextBox Text="{Binding Title}" Style="{StaticResource BaseTextBoxStyle}" MaxLength="64" Background="{StaticResource BackgroundVeryDarkBrush}" FontSize="20" Margin="0 0 0 10"/>
                 <!-- Contents field -->
-                <TextBlock Foreground="{StaticResource ForegroundMainBrush}" FontSize="20" Text="Contents:"/>
-                <TextBox Text="{Binding Contents}" Style="{StaticResource BaseTextBoxStyle}" Height="120" MaxLength="100" Background="{StaticResource BackgroundVeryDarkBrush}" FontSize="20" Margin="0 0 0 10" TextWrapping="Wrap"/>
+                <TextBlock Foreground="{StaticResource ForegroundMainBrush}" FontSize="20" Text="Contents*:"/>
+                <TextBox Text="{Binding Contents}" Style="{StaticResource BaseTextBoxStyle}" Height="120" MaxLength="1000" Background="{StaticResource BackgroundVeryDarkBrush}" FontSize="20" Margin="0 0 0 10" TextWrapping="Wrap"/>
                 <!-- Date field -->
                 <TextBlock FontSize="20" Foreground="{StaticResource ForegroundMainBrush}" Text="{Binding ElementName=cal, Path=SelectedDate, Converter={local:DateTimeToStringConverter}}"/>
                 <StackPanel Orientation="Horizontal">
                     <!-- Date picker field -->
-                    <Calendar SelectedDate="{Binding DateTime}" x:Name="cal" Foreground="{StaticResource ForegroundVeryDarkBrush}" HorizontalAlignment="Left" Style="{StaticResource BaseCalendarStyle}"/>
+                    <Calendar SelectedDate="{Binding End}" x:Name="cal" Foreground="{StaticResource ForegroundVeryDarkBrush}" HorizontalAlignment="Left" Style="{StaticResource BaseCalendarStyle}" local:CalendarDefocus.Value="true"/>
                     <StackPanel Margin="15 0 0 0">
                         <!-- Priority picker field -->
                         <TextBlock Margin="0 0 0 10" FontSize="20" Foreground="{StaticResource ForegroundMainBrush}" Text="Priority:"/>
@@ -40,6 +40,7 @@
                         </ComboBox>
                     </StackPanel>
                 </StackPanel>
+                <TextBlock HorizontalAlignment="Center" Text="Fill all required fields (*)" Foreground="OrangeRed" FontSize="15" Margin="0 10 0 0" Visibility="{Binding RequiredNotFilled, Converter={local:BoolToVisibilityConverter}}"/>
                 <!-- Add button -->
                 <Button FontSize="40" Content="Add" Margin="0 10 0 0" Width="150" Command="{Binding AddCommand}"/>
             </StackPanel>

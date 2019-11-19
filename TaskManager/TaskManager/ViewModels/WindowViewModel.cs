@@ -95,7 +95,7 @@ namespace TaskManager
             CloseCommand = new RelayCommand(() => mWindow.Close());
             MenuCommand = new RelayCommand(() => SystemCommands.ShowSystemMenu(mWindow, GetMousePosition()));
 
-            var resizer = new WindowResizer(mWindow);
+            WindowResizer resizer = new WindowResizer(mWindow);
         }
 
         #endregion

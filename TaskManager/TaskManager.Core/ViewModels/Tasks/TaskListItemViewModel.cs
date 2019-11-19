@@ -27,7 +27,7 @@ namespace TaskManager.Core
         /// <summary>
         /// Date the task have to be done until
         /// </summary>
-        public DateTime EndDate { get; set; }
+        public DateTime? EndDate { get; set; }
 
         /// <summary>
         /// Priority of the task

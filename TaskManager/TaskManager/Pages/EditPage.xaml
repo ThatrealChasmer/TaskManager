@@ -22,7 +22,7 @@
                 <TextBlock FontSize="20" Foreground="{StaticResource ForegroundMainBrush}" Text="{Binding ElementName=cal, Path=SelectedDate}"/>
                 <StackPanel Orientation="Horizontal">
                     <!-- Date picker field -->
-                    <Calendar SelectedDate="{Binding DateTime}" x:Name="cal" Foreground="{StaticResource ForegroundVeryDarkBrush}" HorizontalAlignment="Left" Style="{StaticResource BaseCalendarStyle}"/>
+                    <Calendar SelectedDate="{Binding EndDate}" x:Name="cal" Foreground="{StaticResource ForegroundVeryDarkBrush}" HorizontalAlignment="Left" Style="{StaticResource BaseCalendarStyle}" local:CalendarDefocus.Value="True"/>
                     <StackPanel Margin="15 0 0 0">
                         <!-- Priority picker field -->
                         <TextBlock Margin="0 0 0 10" FontSize="20" Foreground="{StaticResource ForegroundMainBrush}" Text="Priority:"/>

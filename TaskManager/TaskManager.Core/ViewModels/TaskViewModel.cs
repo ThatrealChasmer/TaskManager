@@ -21,7 +21,7 @@ namespace TaskManager.Core
 
         public DateTime Added { get; set; }
 
-        public DateTime End { get; set; }
+        public DateTime? End { get; set; }
 
         public Priority Priority { get; set; }
 
@@ -104,7 +104,9 @@ namespace TaskManager.Core
 
         void Refresh()
         {
-            var ct = IoCContainer.Get<ApplicationViewModel>().CurrentTask;
+            Task ct = IoCContainer.Get<ApplicationViewModel>().CurrentTask;
+
+            IoCContainer.Get<ApplicationViewModel>().CurrentTaskViewModel = this;
 
             if (ct != null)
             {
@@ -120,7 +122,7 @@ namespace TaskManager.Core
             }
         }
 
-        void RefreshNotes()
+        public void RefreshNotes()
         {
             Notes.Clear();
 
@@ -130,6 +132,7 @@ namespace TaskManager.Core
             {
                 Notes.Add(new NoteViewModel
                 {
+                    ID = n.ID,
                     Added = n.Added,
                     Contents = n.Contents
                 });

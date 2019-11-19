@@ -12,7 +12,7 @@ namespace TaskManager
     {
         public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var priority = (Priority)value;
+            Priority priority = (Priority)value;
             switch(priority)
             {
                 case Priority.Low:

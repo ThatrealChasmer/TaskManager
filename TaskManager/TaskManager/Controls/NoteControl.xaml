@@ -19,7 +19,7 @@
                                     <TextBlock Text="{Binding Added, Converter={local:DateTimeToStringConverter}}" FontSize="10"/>
                                 </StackPanel>
                                 <TextBlock Text="{Binding Contents}" TextWrapping="Wrap" Margin="0 4 0 4"/>
-                                <Button FontFamily="{StaticResource ArconRegular}" Style="{StaticResource WindowCloseButton}" Content="Delete" Margin="0 0 -18 0" HorizontalAlignment="Right" Padding="5 3 5 3"/>
+                                <Button FontFamily="{StaticResource ArconRegular}" Content="Delete" Margin="0 0 -18 0" HorizontalAlignment="Right" Padding="5 3 5 3" Command="{Binding DeleteCommand}"/>
                             </StackPanel>
                         </Border>
                         

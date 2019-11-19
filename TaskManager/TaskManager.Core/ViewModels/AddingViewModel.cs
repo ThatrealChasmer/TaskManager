@@ -14,9 +14,11 @@ namespace TaskManager.Core
 
         public string Title { get; set; }
         public string Contents { get; set; }
-        public DateTime DateTime { get; set; }
+        public DateTime End { get; set; }
         public int Priority { get; set; } = 1;
         public int State { get; set; } = 0;
+
+        public bool RequiredNotFilled { get; set; } = false;
 
         #endregion
 
@@ -35,6 +37,7 @@ namespace TaskManager.Core
             OnPropertyChanged(nameof(DateTime));
             OnPropertyChanged(nameof(Priority));
             OnPropertyChanged(nameof(State));
+            OnPropertyChanged(nameof(RequiredNotFilled));
 
             AddCommand = new RelayCommand(() => Add());
         }
@@ -43,42 +46,58 @@ namespace TaskManager.Core
 
         private void Add()
         {
-            Core.Priority p = Core.Priority.Normal;
-            TaskState s = TaskState.New;
-            switch(Priority)
+            RequiredNotFilled = CheckRequired();
+
+            if(!RequiredNotFilled)
             {
-                case 0:
-                    p = Core.Priority.Low;
-                    break;
-                case 1:
-                    p = Core.Priority.Normal;
-                    break;
-                case 2:
-                    p = Core.Priority.High;
-                    break;
+                Core.Priority p = Core.Priority.Normal;
+                TaskState s = TaskState.New;
+                switch (Priority)
+                {
+                    case 0:
+                        p = Core.Priority.Low;
+                        break;
+                    case 1:
+                        p = Core.Priority.Normal;
+                        break;
+                    case 2:
+                        p = Core.Priority.High;
+                        break;
+                }
+                switch (State)
+                {
+                    case 0:
+                        s = TaskState.New;
+                        break;
+                    case 1:
+                        s = TaskState.Progress;
+                        break;
+                    case 2:
+                        s = TaskState.Finished;
+                        break;
+                }
+
+                Task toAdd = new Task(0, Title, Contents, DateTime.Today, End, p, s);
+
+                SQLConnectionHandler.Instance.AddTask(toAdd);
+
+                ApplicationViewModel AVM = IoCContainer.Get<ApplicationViewModel>();
+
+                AVM.CurrentTaskType = toAdd.State;
+
+                AVM.RefreshTasks();
+
+                AVM.CurrentPage = ApplicationPage.Start;
             }
-            switch(State)
+        }
+
+        public bool CheckRequired()
+        {
+            if (Title != null && Contents != null)
             {
-                case 0:
-                    s = TaskState.New;
-                    break;
-                case 1:
-                    s = TaskState.Progress;
-                    break;
-                case 2:
-                    s = TaskState.Finished;
-                    break;
+                return false;
             }
-            
-            Task toAdd = new Task(0, Title, Contents, DateTime.Today, DateTime, p, s);
-
-            SQLConnectionHandler.Instance.AddTask(toAdd);
-
-            IoCContainer.Get<ApplicationViewModel>().CurrentTaskType = toAdd.State;
-
-            IoCContainer.Get<ApplicationViewModel>().RefreshTasks();
-
-            IoCContainer.Get<ApplicationViewModel>().CurrentPage = ApplicationPage.Start;
+            else return true;
         }
     }
 }

@@ -36,7 +36,7 @@ namespace TaskManager.Core
         /// <summary>
         /// End date of the task, time is set to 00:00:00 by default
         /// </summary>
-        public DateTime EndDate { get; set; }
+        public DateTime? EndDate { get; set; }
 
         public Priority Priority { get; set; }
 
@@ -46,7 +46,7 @@ namespace TaskManager.Core
 
         #region Constructor
 
-        public Task(int id, string title, string contents, DateTime start, DateTime end, Priority priority, TaskState state)
+        public Task(int id, string title, string contents, DateTime start, DateTime? end, Priority priority, TaskState state)
         {
             this.ID = id;
             this.Title = title;

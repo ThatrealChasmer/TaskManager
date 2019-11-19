@@ -4,11 +4,19 @@ using System.Windows.Input;
 namespace TaskManager.Core
 {
     /// <summary>
-    /// A view model for each task list item in side task list
+    /// A view model for each note item in task
     /// </summary>
     public class NoteViewModel : BaseViewModel
     {
+        #region Private Members
+
+        int mID;
+
+        #endregion
+
         #region Public Properties
+
+        public int ID { get { return mID; } set { mID = value; } }
 
         /// <summary>
         /// Text of our note
@@ -24,7 +32,7 @@ namespace TaskManager.Core
 
         #region Commands
 
-        public ICommand DeleteCommand;
+        public ICommand DeleteCommand { get; set; }
 
         #endregion
 
@@ -39,7 +47,9 @@ namespace TaskManager.Core
 
         public void Delete()
         {
-            //TODO: add deleting system
+            SQLConnectionHandler.Instance.DeleteNote(ID);
+
+            IoCContainer.Get<ApplicationViewModel>().CurrentTaskViewModel.RefreshNotes();
         }
     }
 }

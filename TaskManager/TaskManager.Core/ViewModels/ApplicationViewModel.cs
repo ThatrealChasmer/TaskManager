@@ -25,6 +25,8 @@ namespace TaskManager.Core
 
         public Task CurrentTask { get; set; }
 
+        public TaskViewModel CurrentTaskViewModel { get; set; }
+
         public ApplicationViewModel()
         {
             OnPropertyChanged(nameof(CurrentPage));
@@ -80,7 +82,7 @@ namespace TaskManager.Core
                     sorted = Tasks.OrderBy(t => (int)t.Priority).ToList();
                     break;
                 case "Ending soon":
-                    sorted = Tasks.OrderByDescending(t => t.EndDate).ToList();
+                    sorted = Tasks.OrderBy(t => t.EndDate).ToList();
                     break;
                 case "A-Z":
                     sorted = Tasks.OrderBy(t => t.Title).ToList();

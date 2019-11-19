@@ -115,7 +115,7 @@ namespace TaskManager
         private void GetTransform()
         {
             // Get the visual source
-            var source = PresentationSource.FromVisual(mWindow);
+            PresentationSource source = PresentationSource.FromVisual(mWindow);
 
             // Reset the transform to default
             mTransformToDevice = default(Matrix);
@@ -136,8 +136,8 @@ namespace TaskManager
         private void Window_SourceInitialized(object sender, System.EventArgs e)
         {
             // Get the handle of this window
-            var handle = (new WindowInteropHelper(mWindow)).Handle;
-            var handleSource = HwndSource.FromHwnd(handle);
+            IntPtr handle = (new WindowInteropHelper(mWindow)).Handle;
+            HwndSource handleSource = HwndSource.FromHwnd(handle);
 
             // If not found, end
             if (handleSource == null)
@@ -163,26 +163,26 @@ namespace TaskManager
                 return;
 
             // Get the WPF size
-            var size = e.NewSize;
+            Size size = e.NewSize;
 
             // Get window rectangle
-            var top = mWindow.Top;
-            var left = mWindow.Left;
-            var bottom = top + size.Height;
-            var right = left + mWindow.Width;
+            double top = mWindow.Top;
+            double left = mWindow.Left;
+            double bottom = top + size.Height;
+            double right = left + mWindow.Width;
 
             // Get window position/size in device pixels
-            var windowTopLeft = mTransformToDevice.Transform(new Point(left, top));
-            var windowBottomRight = mTransformToDevice.Transform(new Point(right, bottom));
+            Point windowTopLeft = mTransformToDevice.Transform(new Point(left, top));
+            Point windowBottomRight = mTransformToDevice.Transform(new Point(right, bottom));
 
             // Check for edges docked
-            var edgedTop = windowTopLeft.Y <= (mScreenSize.Top + mEdgeTolerance);
-            var edgedLeft = windowTopLeft.X <= (mScreenSize.Left + mEdgeTolerance);
-            var edgedBottom = windowBottomRight.Y >= (mScreenSize.Bottom - mEdgeTolerance);
-            var edgedRight = windowBottomRight.X >= (mScreenSize.Right - mEdgeTolerance);
+            bool edgedTop = windowTopLeft.Y <= (mScreenSize.Top + mEdgeTolerance);
+            bool edgedLeft = windowTopLeft.X <= (mScreenSize.Left + mEdgeTolerance);
+            bool edgedBottom = windowBottomRight.Y >= (mScreenSize.Bottom - mEdgeTolerance);
+            bool edgedRight = windowBottomRight.X >= (mScreenSize.Right - mEdgeTolerance);
 
             // Get docked position
-            var dock = WindowDockPosition.Undocked;
+            WindowDockPosition dock = WindowDockPosition.Undocked;
 
             // Left docking
             if (edgedTop && edgedBottom && edgedLeft)
@@ -244,15 +244,15 @@ namespace TaskManager
             GetCursorPos(out lMousePosition);
 
             // Get the primary monitor at cursor position 0,0
-            var lPrimaryScreen = MonitorFromPoint(new POINT(0, 0), MonitorOptions.MONITOR_DEFAULTTOPRIMARY);
+            IntPtr lPrimaryScreen = MonitorFromPoint(new POINT(0, 0), MonitorOptions.MONITOR_DEFAULTTOPRIMARY);
 
             // Try and get the primary screen information
-            var lPrimaryScreenInfo = new MONITORINFO();
+            MONITORINFO lPrimaryScreenInfo = new MONITORINFO();
             if (GetMonitorInfo(lPrimaryScreen, lPrimaryScreenInfo) == false)
                 return;
 
             // Now get the current screen
-            var lCurrentScreen = MonitorFromPoint(lMousePosition, MonitorOptions.MONITOR_DEFAULTTONEAREST);
+            IntPtr lCurrentScreen = MonitorFromPoint(lMousePosition, MonitorOptions.MONITOR_DEFAULTTONEAREST);
 
             // If this has changed from the last one, update the transform
             if (lCurrentScreen != mLastScreen || mTransformToDevice == default(Matrix))
@@ -262,7 +262,7 @@ namespace TaskManager
             mLastScreen = lCurrentScreen;
 
             // Get min/max structure to fill with information
-            var lMmi = (MINMAXINFO)Marshal.PtrToStructure(lParam, typeof(MINMAXINFO));
+            MINMAXINFO lMmi = (MINMAXINFO)Marshal.PtrToStructure(lParam, typeof(MINMAXINFO));
 
             // If it is the primary screen, use the rcWork variable
             if (lPrimaryScreen.Equals(lCurrentScreen) == true)
@@ -282,7 +282,7 @@ namespace TaskManager
             }
 
             // Set min size
-            var minSize = mTransformToDevice.Transform(new Point(mWindow.MinWidth, mWindow.MinHeight));
+            Point minSize = mTransformToDevice.Transform(new Point(mWindow.MinWidth, mWindow.MinHeight));
 
             lMmi.ptMinTrackSize.X = (int)minSize.X;
             lMmi.ptMinTrackSize.Y = (int)minSize.Y;

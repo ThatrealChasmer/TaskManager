@@ -32,7 +32,10 @@ namespace TaskManager.Core
         {
             List<Task> toPass = new List<Task>();
 
-            SqlCommand cmd = new SqlCommand("use TaskManager;select * from Tasks;", connection);
+            SqlCommand cmd = new SqlCommand("GetTasks", connection)
+            {
+                CommandType = CommandType.StoredProcedure
+            };
 
             connection.Open();
 
@@ -41,9 +44,20 @@ namespace TaskManager.Core
             while(rdr.Read())
             {
                 IDataRecord data = (IDataRecord)rdr;
-
-                Task toAdd = new Task((int)data[0], (string)data[1], (string)data[2], data.GetDateTime(3), data.GetDateTime(4), (Priority)data[5], (TaskState)data[6]);
-
+            
+                DateTime? CheckedEndDate;
+            
+                if(data[4] == DBNull.Value)
+                {
+                    CheckedEndDate = null;
+                }
+                else
+                {
+                    CheckedEndDate = data.GetDateTime(4);
+                }
+            
+                Task toAdd = new Task((int)data[0], (string)data[1], (string)data[2], data.GetDateTime(3), CheckedEndDate, (Priority)(data.GetByte(5)), (TaskState)(data.GetByte(6)));
+            
                 toPass.Add(toAdd);
             }
 
@@ -60,18 +74,24 @@ namespace TaskManager.Core
         /// <param name="task">Task to add</param>
         public void AddTask(Task task)
         {
-            string query = "USE TaskManager;INSERT INTO TaskManager.dbo.Tasks(title, contents, add_date, end_date, task_priority, task_state) VALUES (@title, @contents, @start, @end, @priority, @state);";
-
+            int y = task.EndDate.Value.Year;
             connection.Open();
 
-            SqlCommand cmd = new SqlCommand(query, connection);
+            SqlCommand cmd = new SqlCommand("AddTask", connection)
+            {
+                CommandType = CommandType.StoredProcedure
+            };
 
             cmd.Parameters.AddWithValue("@title", task.Title);
             cmd.Parameters.AddWithValue("@contents", task.Contents);
-            cmd.Parameters.AddWithValue("@start", task.StartDate);
-            cmd.Parameters.AddWithValue("@end", task.EndDate);
-            cmd.Parameters.AddWithValue("@priority", (int)task.Priority);
-            cmd.Parameters.AddWithValue("@state", (int)task.State);
+            cmd.Parameters.AddWithValue("@add_date", task.StartDate);
+            if(task.EndDate.Value.Year > 1753 && task.EndDate.Value.Year < 9999)
+            {
+                cmd.Parameters.AddWithValue("@end_date", task.EndDate);
+            }
+            else cmd.Parameters.AddWithValue("@end_date", DBNull.Value);
+            cmd.Parameters.AddWithValue("@task_priority", (int)task.Priority);
+            cmd.Parameters.AddWithValue("@task_state", (int)task.State);
 
             cmd.ExecuteNonQuery();
 
@@ -85,18 +105,25 @@ namespace TaskManager.Core
         /// <param name="task">Task to edit</param>
         public void EditTask(Task task)
         {
-            string query = "USE TaskManager;UPDATE TaskManager.dbo.Tasks SET title=@title, contents=@contents, add_date=@start, end_date=@end, task_priority=@priority, task_state=@state WHERE id=@id;";
+            
 
             connection.Open();
 
-            SqlCommand cmd = new SqlCommand(query, connection);
+            SqlCommand cmd = new SqlCommand("EditTask", connection)
+            {
+                CommandType = CommandType.StoredProcedure
+            };
 
             cmd.Parameters.AddWithValue("@title", task.Title);
             cmd.Parameters.AddWithValue("@contents", task.Contents);
-            cmd.Parameters.AddWithValue("@start", task.StartDate);
-            cmd.Parameters.AddWithValue("@end", task.EndDate);
-            cmd.Parameters.AddWithValue("@priority", (int)task.Priority);
-            cmd.Parameters.AddWithValue("@state", (int)task.State);
+            cmd.Parameters.AddWithValue("@add_date", task.StartDate);
+            if (task.EndDate.Value.Year > 1753 && task.EndDate.Value.Year < 9999)
+            {
+                cmd.Parameters.AddWithValue("@end_date", task.EndDate);
+            }
+            else cmd.Parameters.AddWithValue("@end_date", DBNull.Value);
+            cmd.Parameters.AddWithValue("@task_priority", (int)task.Priority);
+            cmd.Parameters.AddWithValue("@Task_state", (int)task.State);
             cmd.Parameters.AddWithValue("@id", task.ID);
 
             cmd.ExecuteNonQuery();
@@ -111,11 +138,12 @@ namespace TaskManager.Core
         /// <param name="id">ID to delete</param>
         public void DeleteTask(int id)
         {
-            string query = "USE TaskManager;DELETE FROM TaskManager.dbo.Tasks WHERE id=@id";
-
             connection.Open();
 
-            SqlCommand cmd = new SqlCommand(query, connection);
+            SqlCommand cmd = new SqlCommand("DeleteTask", connection)
+            {
+                CommandType = CommandType.StoredProcedure
+            };
 
             cmd.Parameters.AddWithValue("@id", id);
 
@@ -132,13 +160,14 @@ namespace TaskManager.Core
         /// <param name="s">New task state</param>
         public void MoveTask(int id, TaskState s)
         {
-            string query = "USE TaskManager;UPDATE TaskManager.dbo.Tasks SET task_state=@ts WHERE id=@id;";
-
             connection.Open();
 
-            SqlCommand cmd = new SqlCommand(query, connection);
+            SqlCommand cmd = new SqlCommand("MoveTask", connection)
+            {
+                CommandType = CommandType.StoredProcedure
+            };
 
-            cmd.Parameters.AddWithValue("@ts", s);
+            cmd.Parameters.AddWithValue("@task_state", s);
             cmd.Parameters.AddWithValue("@id", id);
 
             cmd.ExecuteNonQuery();
@@ -160,7 +189,10 @@ namespace TaskManager.Core
         {
             List<Note> toPass = new List<Note>();
 
-            SqlCommand cmd = new SqlCommand("use TaskManager;select * from Notes where task_id = @t_id;", connection);
+            SqlCommand cmd = new SqlCommand("GetNotes", connection)
+            {
+                CommandType = CommandType.StoredProcedure
+            };
 
             cmd.Parameters.AddWithValue("@t_id", ID);
 
@@ -190,15 +222,37 @@ namespace TaskManager.Core
         /// <param name="note">Note to add</param>
         public void AddNote(Note note)
         {
-            string query = "USE TaskManager;INSERT INTO TaskManager.dbo.Notes(task_id, added, contents) VALUES (@task_id, @added, @contents);";
-
             connection.Open();
 
-            SqlCommand cmd = new SqlCommand(query, connection);
+            SqlCommand cmd = new SqlCommand("AddNote", connection)
+            {
+                CommandType = CommandType.StoredProcedure
+            };
 
             cmd.Parameters.AddWithValue("@task_id", note.TaskID);
             cmd.Parameters.AddWithValue("@added", note.Added);
             cmd.Parameters.AddWithValue("@contents", note.Contents);
+
+            cmd.ExecuteNonQuery();
+
+            rdr.Close();
+            connection.Close();
+        }
+
+        /// <summary>
+        /// Delete note from database
+        /// </summary>
+        /// <param name="id"></param>
+        public void DeleteNote(int id)
+        {
+            connection.Open();
+
+            SqlCommand cmd = new SqlCommand("DeleteNote", connection)
+            {
+                CommandType = CommandType.StoredProcedure
+            };
+
+            cmd.Parameters.AddWithValue("@id", id);
 
             cmd.ExecuteNonQuery();
 

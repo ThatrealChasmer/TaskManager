@@ -20,7 +20,7 @@ namespace TaskManager.Core
 
         public string Title { get; set; }
         public string Contents { get; set; }
-        public DateTime DateTime { get; set; }
+        public DateTime? EndDate { get; set; }
         public int Priority { get; set; } = 1;
         public int State { get; set; } = 0;
 
@@ -41,14 +41,14 @@ namespace TaskManager.Core
             TaskID = task.ID;
             Title = task.Title;
             Contents = task.Contents;
-            DateTime = task.EndDate;
+            EndDate = task.EndDate;
             Priority = (int)task.Priority;
             State = (int)task.State;
 
 
             OnPropertyChanged(nameof(Title));
             OnPropertyChanged(nameof(Contents));
-            OnPropertyChanged(nameof(DateTime));
+            OnPropertyChanged(nameof(EndDate));
             OnPropertyChanged(nameof(Priority));
             OnPropertyChanged(nameof(State));
 
@@ -86,7 +86,7 @@ namespace TaskManager.Core
                     break;
             }
 
-            Task toEdit = new Task(TaskID, Title, Contents, DateTime.Today, DateTime, p, s);
+            Task toEdit = new Task(TaskID, Title, Contents, DateTime.Today, EndDate, p, s);
 
             SQLConnectionHandler.Instance.EditTask(toEdit);
 

@@ -36,11 +36,11 @@
                         <!-- Title -->
                         <TextBlock Text="{Binding Title, FallbackValue=Test}" FontSize="30" Margin="0 0 0 10"/>
                         <!-- Contents -->
-                        <TextBlock Text="{Binding Contents, FallbackValue='This is a test task'}" Foreground="{StaticResource ForegroundVeryDarkBrush}" FontSize="20" Margin="0 0 0 10"/>
+                        <TextBlock Text="{Binding Contents, FallbackValue='This is a test task'}" Foreground="{StaticResource ForegroundVeryDarkBrush}" FontSize="23" Margin="0 0 0 10" TextWrapping="Wrap"/>
                         <!-- Ending date -->
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock FontSize="20" Text="Until: "/>
-                            <TextBlock FontSize="20" Text="{Binding End, Converter={local:DateTimeToStringConverter}}"/>
+                            <TextBlock FontSize="15" Text="Until: "/>
+                            <TextBlock FontSize="15" Text="{Binding End, Converter={local:DateTimeToStringConverter}}"/>
                         </StackPanel>
                         
                         <!-- Note list -->
