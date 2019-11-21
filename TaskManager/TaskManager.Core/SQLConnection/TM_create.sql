@@ -5,9 +5,9 @@ CREATE TABLE Tasks (
 	title VARCHAR(64) NOT NULL,
 	contents VARCHAR(1000) NOT NULL,
 	add_date DATETIME NOT NULL,
-	end_date DATETIME NOT NULL,
-	task_priority INT NOT NULL,
-	task_state INT NOT NULL
+	end_date DATETIME,
+	task_priority TINYINT NOT NULL,
+	task_state TiNYINT NOT NULL
 );
 
 CREATE TABLE Notes (

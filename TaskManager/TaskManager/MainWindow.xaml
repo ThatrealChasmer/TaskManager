@@ -9,7 +9,7 @@
         WindowStyle="None"
         AllowsTransparency="True"
         Icon="/Images/checklist.png"
-        Title="TaskManager" Height="500" Width="900">
+        Title="TaskManager" Height="800" Width="900">
 
     <Window.Resources>
         <Style TargetType="{x:Type local:MainWindow}">
